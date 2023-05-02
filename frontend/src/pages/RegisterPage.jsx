@@ -9,11 +9,7 @@ const RegisterPage = () => {
    const registerUser = async (e) => {
       e.preventDefault();
       try {
-         await axios.post('/register', {
-            name,
-            email,
-            password
-         });
+         await axios.post('/register', { name, email, password } );
          alert('Registration successful. Now you can log in');
       } catch (exception) {
          alert('Registration failed. Please try again later');
