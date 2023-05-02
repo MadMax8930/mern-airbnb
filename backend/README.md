@@ -11,7 +11,7 @@ yarn add bcryptjs -> encrypt pw (not send in plain text to db)
 // Login user and create JSON Web Token, respond with a Cookie and encrypted username
 yarn add jsonwebtoken -> cookie ('name', 'value') -> if pass is correct
 
-
+yarn add cookie-parser
 
 
 # CORS error
