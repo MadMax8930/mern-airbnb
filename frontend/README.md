@@ -8,6 +8,7 @@ npx tailwind init -p
 ## Dependencies
 
 yarn add react-router-dom (login/register)
+yarn add axios (req to api)
 
 ## To run:
 
