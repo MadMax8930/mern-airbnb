@@ -73,4 +73,8 @@ app.get('/profile', (req,res) => {
    }
 });
 
+app.post('/logout', (req,res) => {
+   res.cookie('token', '').json(true);  // Reset cookie
+});
+
 app.listen(4000);
