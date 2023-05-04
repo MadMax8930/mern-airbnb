@@ -13,6 +13,8 @@ yarn add jsonwebtoken -> cookie ('name', 'value') -> if pass is correct
 
 yarn add cookie-parser
 
+yarn add image-downloader
+
 
 # CORS error
 
