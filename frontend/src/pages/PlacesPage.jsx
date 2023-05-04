@@ -37,6 +37,10 @@ const PlacesPage = () => {
       setPhotoLink('');
    }
 
+   const uploadPhoto = (e) => {
+      console.log(e)
+   }
+
   return (
    <div>
       {action !== 'new' && (
@@ -64,15 +68,18 @@ const PlacesPage = () => {
                          value={photoLink} onChange={e => setPhotoLink(e.target.value)} />
                   <button onClick={addPhotoByLink} className="bg-gray-200 px-4 rounded-2xl">Add&nbsp;photo</button>
                </div>
-               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-2">
-                  {addedPhotos.length > 0 && addedPhotos.map(photo => (
-                     <div key={photo.id}>{photo}</div>
+               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 mt-2">
+                  {addedPhotos.length > 0 && addedPhotos.map((link, index) => (
+                     <div key={index}>
+                        <img src={'http://localhost:4000/uploads/' + link} className="rounded-2xl" alt="Place picture" />
+                     </div>
                   ))}
-                  <button className="flex justify-center gap-1 border bg-transparent rounded-2xl p-8 text-2xl text-gray-500">
+                  <label className="flex justify-center items-center gap-1 border bg-transparent rounded-2xl p-2 text-2xl text-gray-500 cursor-pointer">
+                     <input type="file" onChange={uploadPhoto} className="hidden" />
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
                      </svg> Upload
-                  </button>
+                  </label>
                </div>
                {preInput('Description', 'Description of the place')}
                <textarea value={description} onChange={e => setDescription(e.target.value)} />
