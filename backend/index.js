@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const imageDownloader = require('image-downloader');
+const imageUploader = require('multer');
+const fs = require('fs') // rename files on the server
 
 require('dotenv').config();
 const app = express();
@@ -88,6 +90,21 @@ app.post('/upload-by-link', async (req,res) => {
       dest: __dirname + '/uploads/' + newImageName
    });
    res.json(newImageName);
+});
+
+const photosMiddleware = imageUploader({ dest: 'uploads/'});
+app.post('/upload', photosMiddleware.array('photos', 100), (req,res) => {
+   const uploadedFiles = [];
+   // Rename each file (oldPath, newPath)
+   for (let i = 0; i < req.files.length; i++) {
+      const { path, originalname } = req.files[i];
+      const parts = originalname.split('.');
+      const extension = parts[parts.length - 1];
+      const newPath = path + '.' + extension;
+      fs.renameSync(path, newPath);
+      uploadedFiles.push(newPath.replace('uploads/', ''));
+   }
+   res.json(uploadedFiles);
 });
 
 app.listen(4000);
