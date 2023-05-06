@@ -120,6 +120,20 @@ app.post('/places', async (req,res) => {
    });
 });
 
+app.put('/places', async (req,res) => {
+   const { token } = req.cookies;
+   const { id, title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests } = req.body;
+   jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
+      if (err) throw err;
+      const placeFromDB = await Place.findById(id);
+      if (userData.id === placeFromDB.owner.toString()) {
+         placeFromDB.set({ title, address, photos: addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests });
+         await placeFromDB.save();
+         res.json('Your record has been updated');
+      }
+   });
+});
+
 app.get('/places', async (req,res) => {
    const { token } = req.cookies;
    jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
