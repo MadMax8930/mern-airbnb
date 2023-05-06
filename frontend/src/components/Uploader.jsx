@@ -3,6 +3,7 @@ import axios from "axios";
 
 const Uploader = ({ addedPhotos, setAddedPhotos }) => {
    const [photoLink, setPhotoLink] = useState('');
+   const [active, setActive] = useState({});
 
    const addPhotoByLink = async (e) => {
       e.preventDefault();
@@ -21,6 +22,14 @@ const Uploader = ({ addedPhotos, setAddedPhotos }) => {
       setAddedPhotos(prevArr => [...prevArr, ...filenames]);
    }
 
+   const activateMainPhoto = (clickedLink, index) => {
+      setActive({classes: 'border-[5px] border-primary rounded-[22px]', item: clickedLink});
+      setTimeout(() => {
+         const removedPicture = addedPhotos.splice(index, 1);
+         addedPhotos.unshift(removedPicture[0]);
+      }, 1000)
+   };
+
   return (
    <>
       <div className="flex gap-2">
@@ -29,7 +38,7 @@ const Uploader = ({ addedPhotos, setAddedPhotos }) => {
       </div>
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 mt-2">
          {addedPhotos.length > 0 && addedPhotos.map((link, index) => (
-            <div className="h-32 flex" key={index}>
+            <div className={'flex h-32' && active.item === link ? active.classes : null} key={index} onClick={() => activateMainPhoto(link, index)}> 
                <img src={'http://localhost:4000/uploads/' + link} className="rounded-2xl w-full object-cover" alt="Place picture" />
             </div>
          ))}
