@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const Place = require('./models/Place');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
@@ -106,5 +107,13 @@ app.post('/upload', photosMiddleware.array('photos', 100), (req,res) => {
    }
    res.json(uploadedFiles);
 });
+
+// app.post('/places', async (req,res) => {
+//    const { title, address, addedPhotos, description, perks, checkIn, checkOut, maxGuests } = req.body;
+//    await Place.create({
+//       owner,
+//       title:
+//    })
+// });
 
 app.listen(4000);

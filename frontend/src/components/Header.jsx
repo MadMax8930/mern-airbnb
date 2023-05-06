@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 const Header = () => {
-   const { user } = useContext(UserContext);
+   const { user } = useContext(UserContext); 
+
   return (
    <header className="flex justify-between">
       <Link to={'/'} className="flex items-center gap-1">
