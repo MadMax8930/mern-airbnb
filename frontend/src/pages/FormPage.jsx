@@ -1,18 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Navigate, useParams } from "react-router-dom";
 import Uploader from "../components/Uploader";
-import Perks from "../components/Perks";
-import axios from "axios";
+import Checkboxes from "../components/Checkboxes";
 import Navigation from "../components/Navigation";
+import axios from "axios";
 
 const FormPage = () => {
+   const { id } = useParams();
    const [title, setTitle] = useState('');
    const [address, setAddress] = useState('');
    const [description, setDescription] = useState('');
+   const [addedPhotos, setAddedPhotos] = useState([]);
    const [perks, setPerks] = useState([]);
    const [extraInfo, setExtraInfo] = useState('');
    const [checkIn, setCheckIn] = useState('');
    const [checkOut, setCheckOut] = useState('');
    const [maxGuests, setMaxGuests] = useState(1);
+   const [redirect, setRedirect] = useState(false);
+
+   useEffect(() => {
+      if (!id) return;
+      axios.get('/places/' + id).then(response => {
+         const { data } = response;
+         setTitle(data.title);
+         setAddress(data.address);
+         setDescription(data.description);
+         setAddedPhotos(data.photos);
+         setPerks(data.perks);
+         setExtraInfo(data.extraInfo);
+         setCheckIn(data.checkIn);
+         setCheckOut(data.checkOut);
+         setMaxGuests(data.maxGuests);
+      });
+   }, [id]);
 
    const inputHeader = (text) => {
       return <h2 className="text-2xl mt-4">{text}</h2>
@@ -32,7 +52,10 @@ const FormPage = () => {
    const addNewPlace = async (e) => {
       e.preventDefault();
       await axios.post('/places', { title, address, description, perks, extraInfo, checkIn, checkOut, maxGuests });
+      setRedirect(true);
    }
+
+   if (redirect) return <Navigate to={'/account/places'} />
 
   return (
    <div>
@@ -47,14 +70,14 @@ const FormPage = () => {
                   value={address} onChange={e => setAddress(e.target.value)} />
 
          {preInput('Photos', 'More is better')}
-         <Uploader /> {/* Photo Uploader by link and from device */}
+         <Uploader addedPhotos={addedPhotos} setAddedPhotos={setAddedPhotos} />
 
          {preInput('Description', 'Description of the place')}
          <textarea value={description} onChange={e => setDescription(e.target.value)} />
 
          {preInput('Perks', 'Select all the perks of your place')}
          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mt-2">
-            <Perks selectedArr={perks} onCheckMutateArr={setPerks} />
+            <Checkboxes perks={perks} setPerks={setPerks} />
          </div>
 
          {preInput('Extra info', 'House rules, etc')}

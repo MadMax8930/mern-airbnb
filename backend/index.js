@@ -131,4 +131,10 @@ app.get('/places', async (req,res) => {
    });
 });
 
+app.get('/places/:id', async (req,res) => {
+   const { id } = req.params;
+   const thatOnePlace = await Place.findById(id);
+   res.json(thatOnePlace);
+});
+
 app.listen(4000);
