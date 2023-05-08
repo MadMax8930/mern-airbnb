@@ -20,18 +20,20 @@ function App() {
    <UserContextProvider>
       <Routes>
          <Route path="/" element={<Layout />}>
-            <Route index element={<PublicLandingPage/>} />   
+            <Route index element={<PublicLandingPage/>} />  
+            <Route path="/place/:id" element={<PublicPlaceIdPage/>} /> 
+
             <Route path="/login" element={<AuthLoginPage/>} />
             <Route path="/register" element={<AuthRegisterPage/>} />
+
             <Route path="/account" element={<PrivateAccountPage/>} />
             <Route path="/account/places" element={<PrivatePlacesPage/>} />
             <Route path="/account/places/new" element={<PrivateFormPage/>} />
             <Route path="/account/places/:id" element={<PrivateFormPage/>} />
-            <Route path="/place/:id" element={<PublicPlaceIdPage/>} />
          </Route>
       </Routes>
     </UserContextProvider>
   )
 }
 
-export default App
+export default App;
