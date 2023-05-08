@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 
-const LoginPage = () => {
+const AuthLoginPage = () => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [redirect, setRedirect] = useState(false);
@@ -42,4 +42,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage;
+export default AuthLoginPage;

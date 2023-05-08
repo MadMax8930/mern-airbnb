@@ -1,4 +1,4 @@
-const Checkboxes = ({ perks, setPerks }) => {
+const CheckboxPerks = ({ perks, setPerks }) => {
 
    const handleCheckbox = (e) => {
       const { checked, name } = e.target;
@@ -57,4 +57,4 @@ const Checkboxes = ({ perks, setPerks }) => {
   )
 }
 
-export default Checkboxes;
+export default CheckboxPerks;

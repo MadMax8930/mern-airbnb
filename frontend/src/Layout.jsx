@@ -1,10 +1,10 @@
-import Header from "./components/Header";
+import GlobalHeader from "./components/GlobalHeader";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div className="p-4 flex flex-col min-h-screen">
-      <Header />
+    <div className="py-4 px-8 flex flex-col min-h-screen">
+      <GlobalHeader />
       <Outlet />
     </div>
   )

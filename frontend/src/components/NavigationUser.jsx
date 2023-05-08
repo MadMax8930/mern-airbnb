@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-const Navigation = () => {
+const NavigationUser = () => {
    const { pathname } = useLocation();
    const subPage = pathname.split('/')?.[2]; // undefined || bookings || places
    const linkClasses = (type=null) => {
@@ -36,4 +36,4 @@ const Navigation = () => {
   )
 }
 
-export default Navigation;
+export default NavigationUser;

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-const RegisterPage = () => {
+const AuthRegisterPage = () => {
    const [name, setName] = useState('');
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
@@ -37,4 +37,4 @@ const RegisterPage = () => {
   )
 }
 
-export default RegisterPage;
+export default AuthRegisterPage;

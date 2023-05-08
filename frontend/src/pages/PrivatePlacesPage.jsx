@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Navigation from "../components/Navigation";
+import NavigationUser from "../components/NavigationUser";
 import axios from "axios";
 
-const PlacesPage = () => {
+const PrivatePlacesPage = () => {
    const [places, setPlaces] = useState([]);
    useEffect(() => {
-      axios.get('/places').then(({data}) => {
+      axios.get('/user-places').then(({data}) => {
          setPlaces(data);
       });
    }, []);
 
   return (
    <div>
-      <Navigation />
+      <NavigationUser />
       <div className="text-center">
          <Link to={'/account/places/new'} className="inline-flex bg-primary text-white px-6 py-2 rounded-full gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -41,4 +41,4 @@ const PlacesPage = () => {
   )
 }
 
-export default PlacesPage;
+export default PrivatePlacesPage;

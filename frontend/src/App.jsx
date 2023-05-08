@@ -1,12 +1,13 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
-import IndexPage from "./pages/IndexPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ProfilePage from "./pages/ProfilePage";
-import PlacesPage from "./pages/PlacesPage";
-import FormPage from "./pages/FormPage";
+import PublicLandingPage from "./pages/PublicLandingPage";
+import AuthLoginPage from "./pages/AuthLoginPage";
+import AuthRegisterPage from "./pages/AuthRegisterPage";
+import PrivateAccountPage from "./pages/PrivateAccountPage";
+import PrivatePlacesPage from "./pages/PrivatePlacesPage";
+import PrivateFormPage from "./pages/PrivateFormPage";
+import PublicPlaceIdPage from "./pages/PublicPlaceIdPage";
 import { UserContextProvider } from "./context/UserContext";
 import axios from "axios";
 
@@ -19,13 +20,14 @@ function App() {
    <UserContextProvider>
       <Routes>
          <Route path="/" element={<Layout />}>
-            <Route index element={<IndexPage/>} />   
-            <Route path="/login" element={<LoginPage/>} />
-            <Route path="/register" element={<RegisterPage/>} />
-            <Route path="/account" element={<ProfilePage/>} />
-            <Route path="/account/places" element={<PlacesPage/>} />
-            <Route path="/account/places/new" element={<FormPage/>} />
-            <Route path="/account/places/:id" element={<FormPage/>} />
+            <Route index element={<PublicLandingPage/>} />   
+            <Route path="/login" element={<AuthLoginPage/>} />
+            <Route path="/register" element={<AuthRegisterPage/>} />
+            <Route path="/account" element={<PrivateAccountPage/>} />
+            <Route path="/account/places" element={<PrivatePlacesPage/>} />
+            <Route path="/account/places/new" element={<PrivateFormPage/>} />
+            <Route path="/account/places/:id" element={<PrivateFormPage/>} />
+            <Route path="/place/:id" element={<PublicPlaceIdPage/>} />
          </Route>
       </Routes>
     </UserContextProvider>

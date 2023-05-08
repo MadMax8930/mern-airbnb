@@ -94,7 +94,7 @@ app.post('/upload-by-link', async (req,res) => {
 });
 
 const photosMiddleware = imageUploader({ dest: 'uploads/'});
-app.post('/upload', photosMiddleware.array('photos', 100), (req,res) => {
+app.post('/upload-by-device', photosMiddleware.array('photos', 100), (req,res) => {
    const uploadedFiles = [];
    // Rename each file (oldPath, newPath)
    for (let i = 0; i < req.files.length; i++) {
@@ -108,44 +108,45 @@ app.post('/upload', photosMiddleware.array('photos', 100), (req,res) => {
    res.json(uploadedFiles);
 });
 
-app.post('/places', async (req,res) => {
+app.post('/user-places', async (req,res) => {
    const { token } = req.cookies;
-   const { title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests } = req.body;
+   const { title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests, price } = req.body;
    jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
       if (err) throw err;
-      const newPlace = await Place.create({
-         owner: userData.id, title, address, photos: addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests
-      });
+      const newPlace = await Place.create({ owner: userData.id, title, address, photos: addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests, price });
       res.json(newPlace);
    });
 });
 
-app.put('/places', async (req,res) => {
+app.put('/user-places', async (req,res) => {
    const { token } = req.cookies;
-   const { id, title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests } = req.body;
+   const { id, title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests, price } = req.body;
    jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
       if (err) throw err;
       const placeFromDB = await Place.findById(id);
       if (userData.id === placeFromDB.owner.toString()) {
-         placeFromDB.set({ title, address, photos: addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests });
+         placeFromDB.set({ title, address, photos: addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests, price });
          await placeFromDB.save();
          res.json('Your record has been updated');
       }
    });
 });
 
-app.get('/places', async (req,res) => {
+app.get('/user-places', async (req,res) => {
    const { token } = req.cookies;
    jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
       if (err) throw err;
-      const allPlaces = await Place.find({
-         owner: userData.id
-      });
-      res.json(allPlaces);
+      const allUserPlaces = await Place.find({ owner: userData.id });
+      res.json(allUserPlaces);
    });
 });
 
-app.get('/places/:id', async (req,res) => {
+app.get('/public-places', async (req,res) => {
+   const allPossiblePlaces = await Place.find();
+   res.json(allPossiblePlaces);
+});
+
+app.get('/public-places/:id', async (req,res) => {
    const { id } = req.params;
    const thatOnePlace = await Place.findById(id);
    res.json(thatOnePlace);

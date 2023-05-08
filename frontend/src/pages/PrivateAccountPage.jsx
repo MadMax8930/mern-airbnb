@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { Navigate, useParams } from "react-router-dom";
-import PlacesPage from "./PlacesPage";
-import Navigation from "../components/Navigation";
+import PrivatePlacesPage from "./PrivatePlacesPage";
+import NavigationUser from "../components/NavigationUser";
 import axios from "axios";
 
-const ProfilePage = () => {
+const PrivateAccountPage = () => {
    const [redirect, setRedirect] = useState(null);
    const { ready, user, setUser } = useContext(UserContext);
    const { subPage } = useParams();
@@ -22,16 +22,16 @@ const ProfilePage = () => {
 
   return (
    <div>
-      <Navigation />
+      <NavigationUser />
       {subPage === undefined && (
          <div className="text-center max-w-lg mx-auto">
             Logged in as {user.name} ({user.email}) <br/>
             <button onClick={logoutUser} className="primary max-w-sm mt-2">Logout</button>
          </div>
       )}
-      {subPage === 'places' && (<PlacesPage />)}
+      {subPage === 'places' && (<PrivatePlacesPage />)}
    </div>
   )
 }
 
-export default ProfilePage;
+export default PrivateAccountPage;

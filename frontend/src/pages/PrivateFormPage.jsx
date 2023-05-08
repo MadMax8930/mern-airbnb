@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import Uploader from "../components/Uploader";
-import Checkboxes from "../components/Checkboxes";
-import Navigation from "../components/Navigation";
+import PhotoUploader from "../components/PhotoUploader";
+import CheckboxPerks from "../components/CheckboxPerks";
+import NavigationUser from "../components/NavigationUser";
 import axios from "axios";
 
-const FormPage = () => {
+const PrivateFormPage = () => {
    const { id } = useParams();
    const [title, setTitle] = useState('');
    const [address, setAddress] = useState('');
@@ -16,11 +16,12 @@ const FormPage = () => {
    const [checkIn, setCheckIn] = useState('');
    const [checkOut, setCheckOut] = useState('');
    const [maxGuests, setMaxGuests] = useState(1);
+   const [price, setPrice] = useState(100);
    const [redirect, setRedirect] = useState(false);
 
    useEffect(() => {
       if (!id) return;
-      axios.get('/places/' + id).then(response => {
+      axios.get('/public-places/' + id).then(response => {
          const { data } = response;
          setTitle(data.title);
          setAddress(data.address);
@@ -31,6 +32,7 @@ const FormPage = () => {
          setCheckIn(data.checkIn);
          setCheckOut(data.checkOut);
          setMaxGuests(data.maxGuests);
+         setPrice(data.price);
       });
    }, [id]);
 
@@ -51,14 +53,14 @@ const FormPage = () => {
 
    const savePlace = async (e) => {
       e.preventDefault();
-      const placeData = { title, address, description, addedPhotos, perks, extraInfo, checkIn, checkOut, maxGuests }
+      const placeData = { title, address, description, addedPhotos, perks, extraInfo, checkIn, checkOut, maxGuests, price }
       if (id) {
          // update existing place
-         await axios.put('/places', { id, ...placeData });
+         await axios.put('/user-places', { id, ...placeData });
          setRedirect(true);
       } else {
          // add the new place in db
-         await axios.post('/places', placeData);
+         await axios.post('/user-places', placeData);
          setRedirect(true);
       }
    }
@@ -67,7 +69,7 @@ const FormPage = () => {
 
   return (
    <div>
-      <Navigation />
+      <NavigationUser />
       <form onSubmit={savePlace}>
          {preInput('Title', 'Title for your place. should be short and catchy as in advertisement')}
          <input type="text" placeholder="title, for example: My lovely apartment" 
@@ -78,35 +80,40 @@ const FormPage = () => {
                   value={address} onChange={e => setAddress(e.target.value)} />
 
          {preInput('Photos', 'More is better')}
-         <Uploader addedPhotos={addedPhotos} setAddedPhotos={setAddedPhotos} />
+         <PhotoUploader addedPhotos={addedPhotos} setAddedPhotos={setAddedPhotos} />
 
          {preInput('Description', 'Description of the place')}
          <textarea value={description} onChange={e => setDescription(e.target.value)} />
 
          {preInput('Perks', 'Select all the perks of your place')}
          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mt-2">
-            <Checkboxes perks={perks} setPerks={setPerks} />
+            <CheckboxPerks perks={perks} setPerks={setPerks} />
          </div>
 
          {preInput('Extra info', 'House rules, etc')}
          <textarea value={extraInfo} onChange={e => setExtraInfo(e.target.value)} />
 
          {preInput('Check in & check out times', 'Add check in & out times, remember to have some time window for cleaning the room between guests')}
-         <div className="grid sm:grid-cols-3 gap-2">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             <div>
                <h3 className="mt-2 -mb-1">Check in time</h3>
                <input type="text" placeholder="14:00" 
-                        value={checkIn} onChange={e => setCheckIn(e.target.value)} />
+                      value={checkIn} onChange={e => setCheckIn(e.target.value)} />
             </div>
             <div>
                <h3 className="mt-2 -mb-1">Check out time</h3>
                <input type="text" placeholder="11:00"
-                        value={checkOut} onChange={e => setCheckOut(e.target.value)} />
+                      value={checkOut} onChange={e => setCheckOut(e.target.value)} />
             </div>
             <div>
                <h3 className="mt-2 -mb-1">Max number of guests</h3>
                <input type="number" placeholder="1"
-                        value={maxGuests} onChange={e => setMaxGuests(e.target.value)} />
+                      value={maxGuests} onChange={e => setMaxGuests(e.target.value)} />
+            </div>
+            <div>
+               <h3 className="mt-2 -mb-1">Price per night</h3>
+               <input type="number" placeholder="100"
+                      value={price} onChange={e => setPrice(e.target.value)} />
             </div>
          </div>
 
@@ -116,4 +123,4 @@ const FormPage = () => {
   )
 }
 
-export default FormPage;
+export default PrivateFormPage;

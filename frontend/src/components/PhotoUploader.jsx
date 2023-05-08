@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const Uploader = ({ addedPhotos, setAddedPhotos }) => {
+const PhotoUploader = ({ addedPhotos, setAddedPhotos }) => {
    const [photoLink, setPhotoLink] = useState('');
 
    const addPhotoByLink = async (e) => {
@@ -17,7 +17,7 @@ const Uploader = ({ addedPhotos, setAddedPhotos }) => {
       for (let i = 0; i < files.length; i++) {
          data.append('photos', files[i]);
       }
-      const { data: filenames } = await axios.post('/upload', data, { headers: {'Content-type':'multipart/form-data'} });
+      const { data: filenames } = await axios.post('/upload-by-device', data, { headers: {'Content-type':'multipart/form-data'} });
       setAddedPhotos(prevArr => [...prevArr, ...filenames]);
    }
 
@@ -69,4 +69,4 @@ const Uploader = ({ addedPhotos, setAddedPhotos }) => {
   )
 }
 
-export default Uploader;
+export default PhotoUploader;
