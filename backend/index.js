@@ -1,19 +1,19 @@
 const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+const cors = require('cors'); // front/back communication
+const mongoose = require('mongoose'); // db connection
 const User = require('./models/User');
 const Place = require('./models/Place');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');  // encrypt password
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const imageDownloader = require('image-downloader');
-const imageUploader = require('multer');
+const imageUploader = require('multer'); // upload pictures
 const fs = require('fs') // rename files on the server
 
 require('dotenv').config();
 const app = express();
 
-app.use(express.json());
+app.use(express.json()); // app should use json parser (we need to parse the json from req)
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));  // Mapping server to dirname path (links -> photos)
 app.use(cors({
@@ -48,6 +48,7 @@ app.post('/login', async (req,res) => {
    const foundUser = await User.findOne({ email });
    if (foundUser) {
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
+      // create jwt and respond with a cookie
       if (passwordCorrect) {
          jwt.sign({ 
             id: foundUser._id, 
@@ -79,7 +80,7 @@ app.get('/profile', (req,res) => {
 });
 
 app.post('/logout', (req,res) => {
-   res.cookie('token', '').json(true);  // Reset cookie
+   res.cookie('token', '').json(true);
 });
 
 app.post('/upload-by-link', async (req,res) => {
