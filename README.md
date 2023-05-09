@@ -3,23 +3,15 @@ Node version 16.7
 
 ### Frontend dependencies:
 
-- yarn add tailwindcss postcss autoprefixer
-- yarn add react-router-dom
-- yarn add date-fns
-- yarn add axios
-- yard add dotenv
+```bash
+yarn add tailwindcss postcss autoprefixer react-router-dom date-fns axios dotenv
+```
 
 ### Backend dependencies:
 
-- yarn add express
-- yarn add mongoose
-- yarn add cors
-- yarn add bcryptjs
-- yarn add jsonwebtoken
-- yarn add cookie-parser
-- yarn add image-downloader
-- yarn add multer
-- yard add dotenv
+```bash
+yarn add express mongoose cors bcryptjs jsonwebtoken cookie-parser image-downloader multer dotenv
+```
 
 ### Helpers:
 
@@ -34,6 +26,3 @@ Node version 16.7
 ```bash
 yarn dev
 ```
-
-### Deployment
-[Project deployed](https://mymernbooking.vercel.app) on Vercel.
