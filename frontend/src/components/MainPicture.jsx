@@ -1,4 +1,4 @@
-const PlaceImage = ({ place, index=0 }) => {
+const ImageMain = ({ place, index=0 }) => {
    if (!place.photos?.length) return 'No photos found';
 
   return (
@@ -11,4 +11,4 @@ const PlaceImage = ({ place, index=0 }) => {
   )
 }
 
-export default PlaceImage;
+export default ImageMain;

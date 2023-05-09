@@ -23,6 +23,7 @@ const BookingWidget = ({ place }) => {
    if (checkIn && checkOut) numOfNights = differenceInCalendarDays(new Date(checkOut), new Date(checkIn));
 
    const bookThisPlace = async () => {
+      if (!user) return setRedirect('/login');
       const response = await axios.post('/bookings', { 
          checkIn, checkOut, numOfGuests, name, phone, place: place._id, price: numOfNights * place.price 
       });
