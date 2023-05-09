@@ -24,6 +24,7 @@ Node version 16.7
 
 [Tailwind](https://tailwindcss.com/docs) documentation
 - npx tailwind init -p
+
 [Nodemon](https://www.npmjs.com/package/nodemon) documentation
 - nodemon index.js
 

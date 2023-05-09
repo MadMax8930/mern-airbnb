@@ -8,6 +8,8 @@ import AuthRegisterPage from "./pages/AuthRegisterPage";
 import PrivateAccountPage from "./pages/PrivateAccountPage";
 import PrivatePlacesPage from "./pages/PrivatePlacesPage";
 import PrivateFormPage from "./pages/PrivateFormPage";
+import PrivateBookingsPage from "./pages/PrivateBookingsPage";
+import PrivateBookingIdPage from "./pages/PrivateBookingIdPage";
 import axios from "axios";
 
 axios.defaults.baseURL = 'http://127.0.0.1:4000';
@@ -29,6 +31,9 @@ function App() {
             <Route path="/account/places" element={<PrivatePlacesPage/>} />
             <Route path="/account/places/new" element={<PrivateFormPage/>} />
             <Route path="/account/places/:id" element={<PrivateFormPage/>} />
+
+            <Route path="/account/bookings" element={<PrivateBookingsPage/>} />
+            <Route path="/account/bookings/:id" element={<PrivateBookingIdPage/>} />
          </Route>
       </Routes>
     </UserContextProvider>
