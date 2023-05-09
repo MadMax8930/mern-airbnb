@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavigationUser from "../components/NavigationUser";
+import PlaceImage from "../components/PlaceImage";
 import axios from "axios";
 
 const PrivatePlacesPage = () => {
@@ -26,9 +27,7 @@ const PrivatePlacesPage = () => {
          {places.length > 0 && places.map(place => (
             <Link to={'/account/places/' + place._id} className="flex bg-gray-100 p-4 rounded-2xl gap-4 mb-2 cursor-pointer" key={place.id}>
                <div className="flex w-40 h-32 grow shrink-0 bg-gray-300">
-                  {place.photos.length > 0 && (
-                     <img src={'http://localhost:4000/uploads/' + place.photos[0]} className="object-cover" alt="Apartment picture" />
-                  )}
+                  <PlaceImage place={place} />
                </div>
                <div className="grow-0 shrink">
                   <h2 className="text-xl">{place.title}</h2>
