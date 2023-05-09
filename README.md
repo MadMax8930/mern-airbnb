@@ -1,4 +1,4 @@
-## M.E.R.N Booking application made with [`yarn create vite`]
+## M.E.R.N Booking application made with [`vite`]
 Node version 16.7
 
 ### Frontend dependencies:
@@ -7,18 +7,19 @@ Node version 16.7
 - yarn add react-router-dom
 - yarn add date-fns
 - yarn add axios
+- yard add dotenv
 
 ### Backend dependencies:
 
 - yarn add express
 - yarn add mongoose
-- yard add dotenv
+- yarn add cors
 - yarn add bcryptjs
 - yarn add jsonwebtoken
 - yarn add cookie-parser
 - yarn add image-downloader
 - yarn add multer
-- yarn add cors
+- yard add dotenv
 
 ### Helpers:
 
